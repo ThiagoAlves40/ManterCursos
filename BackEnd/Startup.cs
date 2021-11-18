@@ -30,9 +30,8 @@ namespace BackEnd
         {
             services.AddDbContext<BackEndContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevConnection")));
 
-            services.AddCors();
-
             services.AddControllers();
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BackEnd", Version = "v1" });
@@ -42,11 +41,6 @@ namespace BackEnd
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-             app.UseCors(options =>
-             options.WithOrigins("http://localhost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,6 +53,10 @@ namespace BackEnd
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(x => x.AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

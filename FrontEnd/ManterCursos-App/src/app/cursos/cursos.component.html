@@ -1,0 +1,42 @@
+<div class="form-inline">
+  <div class="form-group mb-2">
+
+    <input type="text"
+    class="form-control mr-2"
+    placeholder="Buscar"
+    [(ngModel)]="filtroLista">
+
+    <button class="btn btn-outline-sucess">Buscar</button>
+  </div>
+</div>
+<h3>Filtro: {{filtroLista}}</h3>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Id</th>
+      <th>Descrição</th>
+      <th>Data de início</th>
+      <th>Data de término</th>
+      <th>Qtd de alunos</th>
+      <th>Categoria</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="curso && curso.length">
+    <tr *ngFor="let curso of cursosFiltrados">
+      <td>{{curso.cursoId}}</td>
+      <td>{{curso.descricao}}</td>
+      <td>{{curso.dataInicio}}</td>
+      <td>{{curso.dataTermino}}</td>
+      <td>{{curso.qtdAlunos}}</td>
+      <td>{{curso.categoriaFk}}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr *ngIf="!curso.length">
+      <td colspan="8">
+        <h4>Nenhum curso cadastrado</h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
