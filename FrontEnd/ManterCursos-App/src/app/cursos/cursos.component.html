@@ -1,15 +1,81 @@
+    <div class="container col-md-11">
+      <br>
+      <br>
+      <br>
+      <div class="jumbotron py-3 fundoJumb">
+        <h1 class="display-4 text-center TextJumb">Curso</h1>
+      </div>
+      <form type="hidden" novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+        <input type="hidden" name="cursoId" [value]="ServiceCurso.formCurso.cursoId" />
+        <div class="form-row">
+
+
+
+          <div class="form-group col-md-6">
+            <!-- <label style="color: rgb(0, 0, 0);">{{this.ServiceCurso.formCurso.categoriaFk}}</label> -->
+
+
+            <!-- <div class="form-group col-md-12"> -->
+              <label for="categoria">Categoria: </label>
+              <select class="form-control form-control-lg" aria-label="Default select example" (click)="getCategoriaFk()" id="cmbCategoria"
+                name="categoria" type="text" #categoria="ngModel" [(ngModel)]="ServiceCurso.formCurso.categoriaFk" required
+                [class.invalid]="categoria.invalid && categoria.touched">
+                <option selected>Selecione uma categoria</option>
+                <option *ngFor="let ct of ServiceCategoria.list" value="{{ct.categoriaId}}">
+                  {{ct.nome}}
+                </option>
+              </select>
+            <!-- </div> -->
+          </div>
+
+          <div class="form-group col-md-6">
+            <label>Qtd Alunos</label>
+            <input class="form-control form-control-lg" placeholder="Informe a Quantidade de Alunos"
+              name="qtdAlunos" type="number" #qtdAlunos="ngModel"
+              [(ngModel)]="ServiceCurso.formCurso.qtdAlunos"
+              [class.invalid]="qtdAlunos.invalid && qtdAlunos.touched">
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Descrição: </label>
+            <input class="form-control form-control-lg" placeholder="Digite a Descrição do Curso" name="descricao" type="text"
+              #descricao="ngModel" [(ngModel)]="ServiceCurso.formCurso.descricao" required
+              [class.invalid]="descricao.invalid && descricao.touched">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Data de Início: </label>
+            <input class="form-control form-control-lg" placeholder="DD/MM/AAAA" name="dataInicio" type="date"
+               #dataInicio="ngModel" [(ngModel)]="ServiceCurso.formCurso.dataInicio" required
+              [class.invalid]="dataInicio.invalid && dataInicio.touched">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Data de Término: </label>
+            <input class="form-control form-control-lg" placeholder="DD/MM/AAAA" name="dataTermino" type="date"
+               #dataTermino="ngModel" [(ngModel)]="ServiceCurso.formCurso.dataTermino" required
+              [class.invalid]="dataTermino.invalid && dataTermino.touched">
+          </div>
+        </div>
+        <div class="form-group col-md-12">
+          <button class="btn  btn-danger btn-lg btn-block" type="submit"
+            [disabled]="form.invalid">Salvar</button>
+        </div>
+      </form>
+    </div>
+
+<!-- ----------------------------------------------------------- -->
 <div class="form-inline">
   <div class="form-group mb-2">
+    <label class="mr-2"></label>
 
     <input type="text"
     class="form-control mr-2"
     placeholder="Buscar"
     [(ngModel)]="filtroLista">
 
-    <button class="btn btn-outline-sucess">Buscar</button>
+    <!-- <button class="btn btn-outline-sucess">Buscar</button> -->
   </div>
 </div>
-<h3>Filtro: {{filtroLista}}</h3>
+<!-- <h3>Filtro: {{filtroLista}}</h3> -->
 
 <table class="table table-striped">
   <thead class="thead-dark">
@@ -20,16 +86,20 @@
       <th>Data de término</th>
       <th>Qtd de alunos</th>
       <th>Categoria</th>
+      <th></th>
     </tr>
   </thead>
   <tbody *ngIf="curso && curso.length">
     <tr *ngFor="let curso of cursosFiltrados">
       <td>{{curso.cursoId}}</td>
       <td>{{curso.descricao}}</td>
-      <td>{{curso.dataInicio}}</td>
-      <td>{{curso.dataTermino}}</td>
+      <td>{{curso.dataInicio | date: 'dd/MM/yy'}}</td>
+      <td>{{curso.dataTermino | date: 'dd/MM/yy'}}</td>
       <td>{{curso.qtdAlunos}}</td>
       <td>{{curso.categoriaFk}}</td>
+      <td>
+        <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(curso.cursoId)"></i>
+      </td>
     </tr>
   </tbody>
   <tfoot>
@@ -40,3 +110,7 @@
     </tr>
   </tfoot>
 </table>
+
+<hr>
+
+<!-- {{curso | json}} -->
