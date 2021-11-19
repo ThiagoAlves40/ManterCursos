@@ -2,8 +2,8 @@
       <br>
       <br>
       <br>
-      <div class="jumbotron py-3 fundoJumb">
-        <h1 class="display-4 text-center TextJumb">Curso</h1>
+      <div class="jumbotron py-3 fundoJumb" style="background-color: black;">
+        <h1 class="display-4 text-center TextJumb" style="color: white;">Curso</h1>
       </div>
       <form type="hidden" novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
         <input type="hidden" name="cursoId" [value]="ServiceCurso.formCurso.cursoId" />
@@ -57,7 +57,7 @@
         </div>
         <div class="form-group col-md-12">
           <button class="btn  btn-danger btn-lg btn-block" type="submit"
-            [disabled]="form.invalid">Salvar</button>
+            [disabled]="form.invalid">Adicionar</button>
         </div>
       </form>
     </div>
@@ -78,8 +78,8 @@
 <!-- <h3>Filtro: {{filtroLista}}</h3> -->
 
 <table class="table table-striped">
-  <thead class="thead-dark">
-    <tr>
+  <thead style="color: white;">
+    <tr style="background-color: black">
       <th>Id</th>
       <th>Descrição</th>
       <th>Data de início</th>
@@ -101,6 +101,12 @@
         <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(curso.cursoId)"></i>
       </td>
     </tr>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button class="btn btn-danger" [routerLink]="['/Home']" >Voltar</button>
   </tbody>
   <tfoot>
     <tr *ngIf="!curso.length">
