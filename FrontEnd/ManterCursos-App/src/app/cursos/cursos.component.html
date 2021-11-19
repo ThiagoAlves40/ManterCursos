@@ -91,12 +91,12 @@
   </thead>
   <tbody *ngIf="curso && curso.length">
     <tr *ngFor="let curso of cursosFiltrados">
-      <td>{{curso.cursoId}}</td>
-      <td>{{curso.descricao}}</td>
-      <td>{{curso.dataInicio | date: 'dd/MM/yy'}}</td>
-      <td>{{curso.dataTermino | date: 'dd/MM/yy'}}</td>
-      <td>{{curso.qtdAlunos}}</td>
-      <td>{{curso.categoriaFk}}</td>
+      <td (click)="populateForm(curso)">{{curso.cursoId}}</td>
+      <td (click)="populateForm(curso)">{{curso.descricao}}</td>
+      <td (click)="populateForm(curso)">{{curso.dataInicio | date: 'dd/MM/yy'}}</td>
+      <td (click)="populateForm(curso)">{{curso.dataTermino | date: 'dd/MM/yy'}}</td>
+      <td (click)="populateForm(curso)">{{curso.qtdAlunos}}</td>
+      <td (click)="populateForm(curso)">{{curso.categoriaFk}}</td>
       <td>
         <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(curso.cursoId)"></i>
       </td>

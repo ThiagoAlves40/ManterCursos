@@ -16,30 +16,30 @@ import { FormsModule } from '@angular/forms';
 })
 export class CursosComponent implements OnInit {
 
-  public curso: any=[];
+  public curso: any = [];
 
   public cursosFiltrados: any = [];
 
-  constructor(private http2: HttpClient, public ServiceCurso: CursoService, public ServiceCategoria: CategoriaService, private toastr:ToastrService) { }
+  constructor(private http2: HttpClient, public ServiceCurso: CursoService, public ServiceCategoria: CategoriaService, private toastr: ToastrService) { }
 
   private _filtroLista: string = '';
 
-  public get filtroLista(): string{
+  public get filtroLista(): string {
     return this._filtroLista;
   }
 
-  public set filtroLista(value: string){
+  public set filtroLista(value: string) {
     this._filtroLista = value;
-    this.cursosFiltrados = this.filtroLista ? this.filtrarCursos(this.filtroLista): this.curso;
+    this.cursosFiltrados = this.filtroLista ? this.filtrarCursos(this.filtroLista) : this.curso;
   }
 
   filtrarCursos(filtrarPor: string): any {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.curso.filter(
-      (curso:{descricao: string;dataInicio: string;dataTermino: string}) =>
-      curso.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-      curso.dataInicio.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-      curso.dataTermino.toLocaleLowerCase().indexOf(filtrarPor) !== -1
+      (curso: { descricao: string; dataInicio: string; dataTermino: string }) =>
+        curso.descricao.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
+        curso.dataInicio.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
+        curso.dataTermino.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     )
   }
 
@@ -51,11 +51,11 @@ export class CursosComponent implements OnInit {
 
   public getCursos(): void {
     this.ServiceCurso.listaTodos().subscribe(
-    response => {
-      this.curso = response;
-      this.cursosFiltrados = this.curso;
-    },
-    error => console.log(error));
+      response => {
+        this.curso = response;
+        this.cursosFiltrados = this.curso;
+      },
+      error => console.log(error));
 
   }
 
@@ -63,12 +63,12 @@ export class CursosComponent implements OnInit {
     this.ServiceCurso.formCurso = Object.assign({}, selectedRecord);
   }
 
-  getCategoriaFk(){
+  getCategoriaFk() {
     let cmbCategoria = (<HTMLSelectElement>document.getElementById("cmbCategoria")).value;
     this.ServiceCurso.formCurso.categoriaFk = Number(cmbCategoria);
     let categorias = this.ServiceCategoria.list;
 
-    for(let i = 0; i <= categorias.length; i++){
+    for (let i = 0; i <= categorias.length; i++) {
       console.log(categorias[0].nome)
     }
   }
@@ -94,27 +94,50 @@ export class CursosComponent implements OnInit {
   }
 
   insertRecord(form: NgForm) {
-    this.ServiceCurso.postCurso().subscribe(
-      res => {
-        this.resetForm(form);
-        this.getCursos();
-        this.toastr.success('Registrado com Sucesso!', 'Curso');
-      },
-      err => { console.log(err); }
-    );
+   /*  if (this.verificarData(form)) {
+      console.log('Data de início é menor que a data atual.');
+    }
+    else { */
+      this.ServiceCurso.postCurso().subscribe(
+        res => {
+          this.resetForm(form);
+          this.getCursos();
+          this.toastr.success('Registrado com Sucesso!', 'Curso');
+        },
+        err => { console.log(err); }
+      );
+    
   }
 
-  /* verifyDate(form: NgForm) {
-    let dataIni = Date();
-    let dataTer = Date();
-    dataIni = form.controls.dataInicio.value;
-    dataTer = form.controls.dataInicio.value;
-    if(this.curso!==null){
-      for(let i=0; i<this.curso.length; i++){
-        this.curso[i].controls.dataInicio.value      -----curso1----
-                                                             -------vurso2--------
-            }
+
+  /*async verificarData(form: NgForm): Promise<boolean> {
+    let dataIni = new Date(form.controls.dataInicio.value);
+    let dataTer = new Date(form.controls.dataTermino.value);
+    let dataAtual = new Date();
+
+    console.log(dataIni +" "+ dataTer +" "+ dataAtual);
+
+    if (dataIni > dataTer) {
+      this.toastr.error('sdahdushui!', 'Curso');
+      return false;
     }
+
+    else if (dataIni < dataAtual || dataTer < dataAtual) {
+      this.toastr.error('Erro!', 'Curso');
+      return false;
+    }
+
+    else if (await this.ServiceCurso.listaTodos().subscribe((cursos: any = []) =>
+    cursos.some((curso: any) => {
+      var iniciaDuranteOutroCurso = dataIni > curso.dataInicio && dataIni < curso.dataTermino;
+      var finalizaDuranteOutroCurso = dataTer > curso.dataInicio && dataTer < curso.dataTermino;
+      return iniciaDuranteOutroCurso  || finalizaDuranteOutroCurso;
+    }))) {
+      this.toastr.error('Erro!', 'Curso');
+      return false;
+    }
+
+    return true;
   }*/
 
   updateRecord(form: NgForm) {
