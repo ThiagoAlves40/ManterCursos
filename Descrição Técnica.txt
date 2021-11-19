@@ -1,0 +1,14 @@
+Thiago Alves da Silva
+
+Descrição Técnica - Manter Cursos
+
+	Utilizando o Visual Studio, foi criado um novo projeto API Web do ASP.NET Core para o Back-End. 
+Dentro do projeto foi criada a pasta Models para então criar as classes Categoria, Curso e a classe Context. 
+Após a instalação dos pacotes Microsoft.EntityFrameworkCore, Microsoft.EntityFrameworkCore.SqlServer e 
+Microsoft.EntityFrameworkCore.Tools, foram adicionados novos itens com scaffolding na pasta Controllers, esses
+itens são controladores MVC com exibições que utilizam o Entity Framework. Foi feita a conexão com o SQL Server, através da 
+string de conexão colocada no arquivo appsettings.json e após a criação das Migrations.
+	Para o Front-End foi ultizado o Visual Studio Code, foi criada a pasta FrontEnd dentro da pasta raiz do projeto e
+foram feitas as instalações do NodeJs, Angular, FontAwesome, NgxBootstrap e do Bootstrap. Foram criados os componentes angular 
+para classes Cursos e Categoria, a partir disso, utilizando rotas, foram criadas as páginas: Home, que é a página inicial da 
+aplicação e a página Cursos, onde é feito o cadastro dos cursos. O controle de versões do projeto foi feito utilizando o GithHub.
